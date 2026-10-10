@@ -1,0 +1,1 @@
+- [Monolyth Aesthetic](memory\monolyth-aesthetic.md) — design tokens
