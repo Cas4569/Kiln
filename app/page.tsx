@@ -1,6 +1,9 @@
 "use client";
 
 import * as React from "react";
+import { MobileMenu } from "@/components/ui/mobile-menu";
+import { PixelTransition } from "@/components/ui/pixel-transition";
+import { useToast } from "@/components/ui/toast";
 import {
   Activity,
   ArrowDownRight,
@@ -129,6 +132,7 @@ export default function Home() {
   const [selectedPrice, setSelectedPrice] = React.useState<number | undefined>();
   const [demoOrderMessage, setDemoOrderMessage] = React.useState("");
   const [demoWallet, setDemoWallet] = React.useState(false);
+  const toast = useToast();
   const market = markets.find((item) => item.id === activeMarketId) ?? markets[0];
   const priceRef = React.useRef(lastPrice);
 
@@ -169,6 +173,7 @@ export default function Home() {
     size: number;
     type: "limit" | "market";
   }) => {
+    toast.success("Order recorded", `${order.size} GPU-hours at $${order.price.toFixed(2)}`);
     setDemoOrderMessage(
       `Demo ${order.type} ${order.side} order recorded: ${order.size} GPU-hours at $${order.price.toFixed(2)}. No trade was submitted onchain.`,
     );
@@ -212,6 +217,7 @@ export default function Home() {
         </nav>
 
         <div className="terminal-topbar-actions">
+          <MobileMenu />
           <span className="terminal-network"><span className="terminal-live-dot" /> Demo stream</span>
           <button
             className={`terminal-wallet-button${demoWallet ? " connected" : ""}`}
@@ -331,7 +337,8 @@ export default function Home() {
           </aside>
 
           <section className="terminal-main-column">
-            <section className="terminal-panel terminal-chart-panel">
+            <PixelTransition triggerKey={activeMarketId}>
+              <section className="terminal-panel terminal-chart-panel">
               <div className="terminal-panel-header">
                 <SectionHeading detail={<span className="terminal-chart-source"><i /> DEMO DATA · NOT AN ORACLE FEED</span>}>PRICE DISCOVERY</SectionHeading>
                 <div className="terminal-segmented" aria-label="Chart mode">
@@ -383,6 +390,7 @@ export default function Home() {
               <div><span>Illustrative spread</span><strong>1.08¢ <small>USDC</small></strong></div>
               <div><span>Provider target</span><strong>2 <small>to onboard</small></strong></div>
             </section>
+            </PixelTransition>
           </section>
 
           <aside className="terminal-right-rail">

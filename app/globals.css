@@ -639,3 +639,63 @@
   .terminal-demo-tag { font-size: 7px; }
   .terminal-brand-copy small { letter-spacing: .08em; }
 }
+/* ===== APPEND THIS TO THE VERY END of app/globals.css ===== */
+
+/* 1. No horizontal scroll */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+.terminal-shell {
+  max-width: 100vw;
+}
+
+/* 2. Hamburger button (hidden on desktop) */
+.terminal-menu-button {
+  display: none;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #284047;
+  border-radius: 6px;
+  background: #17262a;
+}
+
+/* 3. Mobile layout */
+@media (max-width: 768px) {
+  .terminal-topbar { height: 60px; padding: 0 16px; gap: 12px; }
+  .terminal-brand { min-width: 0; }
+  .terminal-nav,
+  .terminal-network { display: none; }
+  .terminal-topbar-actions { min-width: 0; gap: 10px; }
+  .terminal-menu-button { display: inline-flex; }
+  .terminal-ticker { padding: 0 16px; }
+  .terminal-ticker-label,
+  .terminal-stream-status { display: none; }
+  .terminal-content { padding: 20px 16px 16px; }
+  .terminal-market-intro { flex-direction: column; align-items: stretch; }
+  .terminal-hero-stats { flex-wrap: wrap; gap: 14px; padding: 12px 14px; }
+  .terminal-dashboard { grid-template-columns: minmax(0, 1fr); }
+  .terminal-market-data { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .terminal-traction-strip { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .terminal-index-chart { max-width: 100%; }
+}
+
+/* 4. Respect reduced-motion settings */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
